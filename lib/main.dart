@@ -34,11 +34,14 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
   // --- 1. Valores Padrão (para reset) ---
   static final DateTime _dataPadrao = DateTime.now();
   static const TimeOfDay _horarioPadrao = TimeOfDay(hour: 19, minute: 0);
+  static const String _tipoPadrao = 'Aniversário';
+  static const double _quantidadeConvidadosPadrao = 50.0;
 
   // --- 2. Variáveis de Estado ---
   late DateTime _dataSelecionada;
   late TimeOfDay _horarioSelecionado;
   late String _tipoEventoSelecionado;
+  late double _quantidadeConvidados;
 
   @override
   void initState() {
@@ -50,7 +53,8 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
     setState(() {
       _dataSelecionada = _dataPadrao;
       _horarioSelecionado = _horarioPadrao;
-      _tipoEventoSelecionado = 'Aniversário';
+      _tipoEventoSelecionado = _tipoPadrao;
+      _quantidadeConvidados = _quantidadeConvidadosPadrao;
     });
     debugPrint('[DEBUG] Formulario resetado para os valores padrao.');
   }
@@ -64,6 +68,7 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
     );
     debugPrint('Horário: ${_horarioSelecionado.format(context)}');
     debugPrint('Tipo de Evento: $_tipoEventoSelecionado');
+    debugPrint('Estimativa de Convidados: ${_quantidadeConvidados.round()}');
     debugPrint('==============================');
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -173,6 +178,36 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
                     '[DEBUG - Menu] Tipo de evento selecionado: $novoValor',
                   );
                 }
+              },
+            ),
+            const Divider(height: 32),
+            // --- 4. Slider ---
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Quantidade de Convidados',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Text(
+                  '${_quantidadeConvidados.round()} pessoas',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            Slider(
+              value: _quantidadeConvidados,
+              min: 10,
+              max: 500,
+              divisions: 49,
+              label: _quantidadeConvidados.round().toString(),
+              onChanged: (novoValor) {
+                setState(() {
+                  _quantidadeConvidados = novoValor;
+                });
+                debugPrint(
+                  '[DEBUG - Slider] Quantidade de convidados: ${novoValor.round()}',
+                );
               },
             ),
             const Divider(height: 32),
