@@ -342,6 +342,33 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
               },
             ),
             const SizedBox(height: 24),
+            // --- Botões de Ação Final (Cancelar e Salvar) ---
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: resetarValores,
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.red,
+                      side: const BorderSide(color: Colors.red),
+                    ),
+                    child: const Text('Cancelar'),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: salvarFormulario,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      foregroundColor: Colors.white,
+                    ),
+                    child: const Text('Salvar'),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
           ],
         ),
       ),
