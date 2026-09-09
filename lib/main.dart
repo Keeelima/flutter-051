@@ -52,6 +52,7 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
     'Vegano',
   ];
   static const List<String> _tagsPadrao = [];
+  static const bool _notificacaoAtivaPadrao = false;
 
   // --- 2. Variáveis de Estado ---
   late DateTime _dataSelecionada;
@@ -61,6 +62,7 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
   late Visibilidade _visibilidadeSelecionada;
   late Map<String, bool> _servicosSelecionados;
   late List<String> _tagsSelecionadas;
+  late bool _notificacaoAtiva;
 
   @override
   void initState() {
@@ -77,6 +79,7 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
       _visibilidadeSelecionada = _visibilidadePadrao;
       _servicosSelecionados = Map.from(_servicosPadrao);
       _tagsSelecionadas = List<String>.from(_tagsPadrao);
+      _notificacaoAtiva = _notificacaoAtivaPadrao;
     });
     debugPrint('[DEBUG] Formulario resetado para os valores padrao.');
   }
@@ -94,6 +97,7 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
     debugPrint('Visibilidade: $_visibilidadeSelecionada');
     debugPrint('Serviços selecionados: $_servicosSelecionados');
     debugPrint('Restrições Alimentares: $_tagsSelecionadas');
+    debugPrint('Lembrete Automático: $_notificacaoAtiva');
     debugPrint('==============================');
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -321,6 +325,23 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
               }).toList(),
             ),
             const Divider(height: 32),
+            // --- 8. Switch ---
+            SwitchListTile(
+              title: const Text('Enviar Lembrete Automático'),
+              subtitle: const Text(
+                'Notificar convidados 24 horas antes do evento.',
+              ),
+              value: _notificacaoAtiva,
+              onChanged: (bool ativo) {
+                setState(() {
+                  _notificacaoAtiva = ativo;
+                });
+                debugPrint(
+                  '[DEBUG - Switch] Notificação automática alterada para: $ativo',
+                );
+              },
+            ),
+            const SizedBox(height: 24),
           ],
         ),
       ),
