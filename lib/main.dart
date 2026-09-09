@@ -14,8 +14,37 @@ class MeuApp extends StatelessWidget {
       title: 'Agendamento de Evento',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF0F766E),
+          brightness: Brightness.light,
+        ),
+        scaffoldBackgroundColor: const Color(0xFFF5F7F4),
         useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF0F766E),
+          foregroundColor: Colors.white,
+          elevation: 0,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF0F766E),
+            foregroundColor: Colors.white,
+            minimumSize: const Size.fromHeight(48),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            foregroundColor: const Color(0xFFBE5B45),
+            minimumSize: const Size.fromHeight(48),
+            side: const BorderSide(color: Color(0xFFBE5B45), width: 1.5),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
       ),
       // Aponta Home para Classe AgendamentoEventoTela
       home: const AgendamentoEventoTela(),
@@ -143,10 +172,7 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Novo Evento Social'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
+      appBar: AppBar(title: const Text('Novo Evento Social')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -165,6 +191,10 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
                     label: Text(
                       '${_dataSelecionada.day}/${_dataSelecionada.month}/${_dataSelecionada.year}',
                     ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFE5A83B),
+                      foregroundColor: const Color(0xFF3C2A13),
+                    ),
                     onPressed: () => _selecionarData(context),
                   ),
                 ),
@@ -173,6 +203,10 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
                   child: ElevatedButton.icon(
                     icon: const Icon(Icons.access_time),
                     label: Text(_horarioSelecionado.format(context)),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF2A9D8F),
+                      foregroundColor: Colors.white,
+                    ),
                     onPressed: () => _selecionarHorario(context),
                   ),
                 ),
@@ -349,8 +383,11 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
                   child: OutlinedButton(
                     onPressed: resetarValores,
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.red,
-                      side: const BorderSide(color: Colors.red),
+                      foregroundColor: const Color(0xFFBE5B45),
+                      side: const BorderSide(
+                        color: Color(0xFFBE5B45),
+                        width: 1.5,
+                      ),
                     ),
                     child: const Text('Cancelar'),
                   ),
@@ -360,7 +397,7 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
                   child: ElevatedButton(
                     onPressed: salvarFormulario,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      backgroundColor: const Color(0xFF0F766E),
                       foregroundColor: Colors.white,
                     ),
                     child: const Text('Salvar'),
