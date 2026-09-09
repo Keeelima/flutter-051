@@ -45,6 +45,13 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
     'Decoração': false,
     'DJ': false,
   };
+  static const List<String> _tagsDisponiveis = [
+    'Vegetariano',
+    'Sem Glúten',
+    'Sem Lactose',
+    'Vegano',
+  ];
+  static const List<String> _tagsPadrao = [];
 
   // --- 2. Variáveis de Estado ---
   late DateTime _dataSelecionada;
@@ -53,6 +60,7 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
   late double _quantidadeConvidados;
   late Visibilidade _visibilidadeSelecionada;
   late Map<String, bool> _servicosSelecionados;
+  late List<String> _tagsSelecionadas;
 
   @override
   void initState() {
@@ -68,6 +76,7 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
       _quantidadeConvidados = _quantidadeConvidadosPadrao;
       _visibilidadeSelecionada = _visibilidadePadrao;
       _servicosSelecionados = Map.from(_servicosPadrao);
+      _tagsSelecionadas = List<String>.from(_tagsPadrao);
     });
     debugPrint('[DEBUG] Formulario resetado para os valores padrao.');
   }
@@ -84,6 +93,7 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
     debugPrint('Estimativa de Convidados: ${_quantidadeConvidados.round()}');
     debugPrint('Visibilidade: $_visibilidadeSelecionada');
     debugPrint('Serviços selecionados: $_servicosSelecionados');
+    debugPrint('Restrições Alimentares: $_tagsSelecionadas');
     debugPrint('==============================');
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -276,6 +286,35 @@ class _AgendamentoEventoTelaState extends State<AgendamentoEventoTela> {
                     });
                     debugPrint(
                       '[DEBUG - Checkbox] Serviço "$servico" alterado para: $marcado',
+                    );
+                  },
+                );
+              }).toList(),
+            ),
+            const Divider(height: 32),
+            // --- 7. Chip (FilterChip) ---
+            Text(
+              'Restrições Alimentares (Tags)',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              children: _tagsDisponiveis.map((tag) {
+                final selecionada = _tagsSelecionadas.contains(tag);
+                return FilterChip(
+                  label: Text(tag),
+                  selected: selecionada,
+                  onSelected: (bool selecionado) {
+                    setState(() {
+                      if (selecionado) {
+                        _tagsSelecionadas.add(tag);
+                      } else {
+                        _tagsSelecionadas.remove(tag);
+                      }
+                    });
+                    debugPrint(
+                      '[DEBUG - Chip] Tag "$tag" ${selecionado ? "adicionada" : "removida"}. Lista atual: $_tagsSelecionadas',
                     );
                   },
                 );
